@@ -3,8 +3,6 @@ parameters:
     type: string
   - name: VSCODE_CIBUILD
     type: boolean
-  - name: VSCODE_QUALITY
-    type: string
   - name: VSCODE_RUN_ELECTRON_TESTS
     type: boolean
     default: false
@@ -77,7 +75,6 @@ jobs:
         parameters:
           VSCODE_ARCH: ${{ parameters.VSCODE_ARCH }}
           VSCODE_CIBUILD: ${{ parameters.VSCODE_CIBUILD }}
-          VSCODE_QUALITY: ${{ parameters.VSCODE_QUALITY }}
           VSCODE_RUN_ELECTRON_TESTS: ${{ parameters.VSCODE_RUN_ELECTRON_TESTS }}
           VSCODE_RUN_BROWSER_TESTS: ${{ parameters.VSCODE_RUN_BROWSER_TESTS }}
           VSCODE_RUN_REMOTE_TESTS: ${{ parameters.VSCODE_RUN_REMOTE_TESTS }}

@@ -3,8 +3,6 @@ parameters:
     type: string
   - name: VSCODE_CIBUILD
     type: boolean
-  - name: VSCODE_QUALITY
-    type: string
   - name: VSCODE_RUN_ELECTRON_TESTS
     type: boolean
     default: false

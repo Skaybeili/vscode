@@ -519,21 +519,11 @@ extends:
       - ${{ if eq(variables['VSCODE_PUBLISH'], 'true') }}:
         - stage: Publish
           dependsOn: []
-          pool:
-            name: 1es-windows-2022-x64
-            os: windows
-          variables:
-            - name: BUILDS_API_URL
-              value: $(System.CollectionUri)$(System.TeamProject)/_apis/build/builds/$(Build.BuildId)/
           jobs:
-            - job: PublishBuild
-              timeoutInMinutes: 180
-              displayName: Publish Build
-              steps:
-                - template: build/azure-pipelines/product-publish.yml@self
-                  parameters:
-                    VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
-                    VSCODE_SCHEDULEDBUILD: ${{ variables.VSCODE_SCHEDULEDBUILD }}
+            - template: build/azure-pipelines/product-publish.yml@self
+              parameters:
+                VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
+                VSCODE_SCHEDULEDBUILD: ${{ variables.VSCODE_SCHEDULEDBUILD }}
 
         - ${{ if and(parameters.VSCODE_RELEASE, eq(variables['VSCODE_PRIVATE_BUILD'], false)) }}:
           - stage: ApproveRelease

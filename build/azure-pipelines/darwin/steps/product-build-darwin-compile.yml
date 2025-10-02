@@ -198,15 +198,13 @@ steps:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
       displayName: Check for client artifact
 
-    # - template: ../common/publish-artifact.yml@self
-    #   parameters:
-    #     targetPath: $(CLIENT_PATH)
-    #     artifactName: unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive
-    #     displayName: Publish client archive (unsigned)
-    #     sbomBuildDropPath: $(Agent.BuildDirectory)/VSCode-darwin-$(VSCODE_ARCH)
-    #     sbomPackageName: "VS Code macOS $(VSCODE_ARCH) (unsigned)"
-    #     sbomPackageVersion: $(Build.SourceVersion)
-    #     condition: and(succeeded(), ne(variables['CLIENT_PATH'], ''), eq(variables['CLIENT_ARCHIVE_UPLOADED'], 'false'))
+    - template: ../common/publish-artifact.yml@self
+      parameters:
+        targetPath: $(CLIENT_PATH)
+        artifactName: unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive
+        displayName: Publish client archive (unsigned)
+        sbomEnabled: false
+        condition: and(succeeded(), ne(variables['CLIENT_PATH'], ''), eq(variables['CLIENT_ARCHIVE_UPLOADED'], 'false'))
 
     # Hardened entitlements should be set after publishing unsigned client artifacts
     # to ensure entitlement signing doesn't modify sha that would affect universal build.

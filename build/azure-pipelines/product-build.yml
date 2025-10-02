@@ -488,7 +488,7 @@ extends:
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(variables['VSCODE_BUILD_MACOS_UNIVERSAL'], true)) }}:
               - template: build/azure-pipelines/darwin/product-build-darwin-universal.yml@self
 
-            - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), or(eq(variables['VSCODE_BUILD_MACOS'], true), eq(variables['VSCODE_BUILD_MACOS_ARM64'], true))) }}:
+            - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), or(eq(parameters.VSCODE_BUILD_MACOS, true), eq(parameters.VSCODE_BUILD_MACOS_ARM64, true))) }}:
               - template: build/azure-pipelines/darwin/product-build-darwin-cli-sign.yml@self
                 parameters:
                   VSCODE_BUILD_MACOS: ${{ parameters.VSCODE_BUILD_MACOS }}

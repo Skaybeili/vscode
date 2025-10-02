@@ -198,7 +198,7 @@ steps:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
       displayName: Check for client artifact
 
-    - template: ../common/publish-artifact.yml@self
+    - template: ../../common/publish-artifact.yml@self
       parameters:
         targetPath: $(CLIENT_PATH)
         artifactName: unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive

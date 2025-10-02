@@ -477,14 +477,6 @@ extends:
                       VSCODE_ARCH: x64
                       VSCODE_CIBUILD: ${{ variables.VSCODE_CIBUILD }}
 
-              - job: macOSCLI
-                timeoutInMinutes: 90
-                steps:
-                  - template: build/azure-pipelines/darwin/product-build-darwin-cli-sign.yml@self
-                    parameters:
-                      VSCODE_BUILD_MACOS: ${{ parameters.VSCODE_BUILD_MACOS }}
-                      VSCODE_BUILD_MACOS_ARM64: ${{ parameters.VSCODE_BUILD_MACOS_ARM64 }}
-
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_MACOS_ARM64, true)) }}:
               - job: macOSARM64
                 timeoutInMinutes: 90
@@ -501,13 +493,13 @@ extends:
                       VSCODE_RUN_REMOTE_TESTS: ${{ eq(parameters.VSCODE_STEP_ON_IT, false) }}
 
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(variables['VSCODE_BUILD_MACOS_UNIVERSAL'], true)) }}:
-              - job: macOSUniversal
-                timeoutInMinutes: 90
-                variables:
-                  VSCODE_ARCH: universal
-                  BUILDS_API_URL: $(System.CollectionUri)$(System.TeamProject)/_apis/build/builds/$(Build.BuildId)/
-                steps:
-                  - template: build/azure-pipelines/darwin/product-build-darwin-universal.yml@self
+              - template: build/azure-pipelines/darwin/product-build-darwin-universal.yml@self
+
+            - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), or(eq(variables['VSCODE_BUILD_MACOS'], true), eq(variables['VSCODE_BUILD_MACOS_ARM64'], true))) }}:
+              - template: build/azure-pipelines/darwin/product-build-darwin-cli-sign.yml@self
+                parameters:
+                  VSCODE_BUILD_MACOS: ${{ parameters.VSCODE_BUILD_MACOS }}
+                  VSCODE_BUILD_MACOS_ARM64: ${{ parameters.VSCODE_BUILD_MACOS_ARM64 }}
 
       - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_COMPILE_ONLY, false), eq(variables['VSCODE_BUILD_STAGE_WEB'], true)) }}:
         - stage: Web

@@ -12,17 +12,17 @@ jobs:
       outputs:
         - ${{ if eq(parameters.VSCODE_BUILD_MACOS, true) }}:
           - output: pipelineArtifact
-            targetPath: $(Build.ArtifactStagingDirectory)/pkg/unsigned_vscode_cli_darwin_x64_cli/$(ASSET_ID).zip
-            artifactName: $(ASSET_ID)
-            displayName: Publish signed artifact with ID $(ASSET_ID)
+            targetPath: $(Build.ArtifactStagingDirectory)/pkg/unsigned_vscode_cli_darwin_x64_cli/vscode_cli_darwin_x64_cli.zip
+            artifactName: vscode_cli_darwin_x64_cli
+            displayName: Publish signed artifact with ID vscode_cli_darwin_x64_cli
             sbomBuildDropPath: $(Build.ArtifactStagingDirectory)/sign/unsigned_vscode_cli_darwin_x64_cli
             sbomPackageName: "VS Code macOS unsigned_vscode_cli_darwin_x64_cli CLI"
             sbomPackageVersion: $(Build.SourceVersion)
         - ${{ if eq(parameters.VSCODE_BUILD_MACOS_ARM64, true) }}:
           - output: pipelineArtifact
-            targetPath: $(Build.ArtifactStagingDirectory)/pkg/unsigned_vscode_cli_darwin_arm64_cli/$(ASSET_ID).zip
-            artifactName: $(ASSET_ID)
-            displayName: Publish signed artifact with ID $(ASSET_ID)
+            targetPath: $(Build.ArtifactStagingDirectory)/pkg/unsigned_vscode_cli_darwin_arm64_cli/vscode_cli_darwin_arm64_cli.zip
+            artifactName: vscode_cli_darwin_arm64_cli
+            displayName: Publish signed artifact with ID vscode_cli_darwin_arm64_cli
             sbomBuildDropPath: $(Build.ArtifactStagingDirectory)/sign/unsigned_vscode_cli_darwin_arm64_cli
             sbomPackageName: "VS Code macOS unsigned_vscode_cli_darwin_arm64_cli CLI"
             sbomPackageVersion: $(Build.SourceVersion)

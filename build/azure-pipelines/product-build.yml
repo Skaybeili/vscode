@@ -232,26 +232,16 @@ extends:
                       VSCODE_BUILD_LINUX_ARM64: ${{ parameters.VSCODE_BUILD_LINUX_ARM64 }}
 
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_ALPINE, true)) }}:
-              - job: CLIAlpineX64
-                pool:
-                  name: 1es-ubuntu-22.04-x64
-                  os: linux
-                steps:
-                  - template: build/azure-pipelines/alpine/cli-build-alpine.yml@self
-                    parameters:
-                      VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
-                      VSCODE_BUILD_ALPINE: ${{ parameters.VSCODE_BUILD_ALPINE }}
+              - template: build/azure-pipelines/alpine/product-build-alpine-cli.yml@self
+                parameters:
+                  VSCODE_ARCH: x64
+                  VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
 
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_ALPINE_ARM64, true)) }}:
-              - job: CLIAlpineARM64
-                pool:
-                  name: 1es-ubuntu-22.04-x64
-                  os: linux
-                steps:
-                  - template: build/azure-pipelines/alpine/cli-build-alpine.yml@self
-                    parameters:
-                      VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
-                      VSCODE_BUILD_ALPINE_ARM64: ${{ parameters.VSCODE_BUILD_ALPINE_ARM64 }}
+              - template: build/azure-pipelines/alpine/product-build-alpine-cli.yml@self
+                parameters:
+                  VSCODE_ARCH: arm64
+                  VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
 
             - ${{ if eq(parameters.VSCODE_BUILD_MACOS, true) }}:
               - job: CLIMacOSX64

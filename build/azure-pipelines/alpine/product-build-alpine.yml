@@ -41,6 +41,7 @@ jobs:
             sbomPackageVersion: $(Build.SourceVersion)
             condition: and(succeededOrFailed(), ne(variables['SERVER_PATH'], ''))
           - output: pipelineArtifact
+            targetPath: $(WEB_PATH)
             artifactName: $(ARTIFACT_PREFIX)vscode_web_alpine_$(VSCODE_ARCH)_archive-unsigned
             displayName: Publish web server archive
             sbomBuildDropPath: $(WEB_DIR_PATH)

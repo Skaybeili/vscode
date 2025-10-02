@@ -229,14 +229,14 @@ extends:
                   VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
 
             - ${{ if eq(parameters.VSCODE_BUILD_MACOS, true) }}:
-              - template: build/azure-pipelines/darwin/cli-build-darwin.yml@self
+              - template: build/azure-pipelines/darwin/product-build-darwin-cli.yml@self
                 parameters:
                   VSCODE_ARCH: x64
                   VSCODE_CHECK_ONLY: ${{ variables.VSCODE_CIBUILD }}
                   VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}
 
             - ${{ if and(eq(variables['VSCODE_CIBUILD'], false), eq(parameters.VSCODE_BUILD_MACOS_ARM64, true)) }}:
-              - template: build/azure-pipelines/darwin/cli-build-darwin.yml@self
+              - template: build/azure-pipelines/darwin/product-build-darwin-cli.yml@self
                 parameters:
                   VSCODE_ARCH: arm64
                   VSCODE_QUALITY: ${{ variables.VSCODE_QUALITY }}

@@ -1,5 +1,7 @@
 jobs:
   - job: Web
+    displayName: Web
+    timeoutInMinutes: 30
     pool:
       name: 1es-ubuntu-22.04-x64
       os: linux

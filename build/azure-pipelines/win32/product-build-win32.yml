@@ -17,7 +17,7 @@ parameters:
 
 jobs:
   - job: Windows_${{ parameters.VSCODE_ARCH }}
-    displayName: Windows${{ upper(parameters.VSCODE_ARCH) }}
+    displayName: Windows (${{ upper(parameters.VSCODE_ARCH) }})
     timeoutInMinutes: 90
     variables:
       VSCODE_ARCH: ${{ parameters.VSCODE_ARCH }}

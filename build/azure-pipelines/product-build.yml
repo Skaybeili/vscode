@@ -448,26 +448,15 @@ extends:
             - Compile
             - ${{ if or(eq(parameters.VSCODE_BUILD_LINUX, true),eq(parameters.VSCODE_BUILD_LINUX_ARMHF, true),eq(parameters.VSCODE_BUILD_LINUX_ARM64, true),eq(parameters.VSCODE_BUILD_ALPINE, true),eq(parameters.VSCODE_BUILD_ALPINE_ARM64, true),eq(parameters.VSCODE_BUILD_MACOS, true),eq(parameters.VSCODE_BUILD_MACOS_ARM64, true),eq(parameters.VSCODE_BUILD_WIN32, true),eq(parameters.VSCODE_BUILD_WIN32_ARM64, true)) }}:
               - CompileCLI
-          pool:
-            name: 1es-ubuntu-22.04-x64
-            os: linux
           jobs:
             - ${{ if eq(parameters.VSCODE_BUILD_ALPINE, true) }}:
-              - job: LinuxAlpine
-                variables:
+              - template: build/azure-pipelines/alpine/product-build-alpine.yml@self
+                parameters:
                   VSCODE_ARCH: x64
-                  NPM_ARCH: x64
-                steps:
-                  - template: build/azure-pipelines/alpine/product-build-alpine.yml@self
-
             - ${{ if eq(parameters.VSCODE_BUILD_ALPINE_ARM64, true) }}:
-              - job: LinuxAlpineArm64
-                timeoutInMinutes: 120
-                variables:
+              - template: build/azure-pipelines/alpine/product-build-alpine.yml@self
+                parameters:
                   VSCODE_ARCH: arm64
-                  NPM_ARCH: arm64
-                steps:
-                  - template: build/azure-pipelines/alpine/product-build-alpine.yml@self
 
       - ${{ if and(eq(parameters.VSCODE_COMPILE_ONLY, false), eq(variables['VSCODE_BUILD_STAGE_MACOS'], true)) }}:
         - stage: macOS

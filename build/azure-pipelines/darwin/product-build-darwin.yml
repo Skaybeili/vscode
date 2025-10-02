@@ -23,7 +23,7 @@ jobs:
       VSCODE_ARCH: ${{ parameters.VSCODE_ARCH }}
       BUILDS_API_URL: $(System.CollectionUri)$(System.TeamProject)/_apis/build/builds/$(Build.BuildId)/
     steps:
-      - template: ./steps/product-build-macos-compile.yml@self
+      - template: ./steps/product-build-darwin-compile.yml@self
         parameters:
           VSCODE_ARCH: ${{ parameters.VSCODE_ARCH }}
           VSCODE_CIBUILD: ${{ parameters.VSCODE_CIBUILD }}

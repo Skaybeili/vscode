@@ -47,12 +47,6 @@ jobs:
             isProduction: false
             condition: succeededOrFailed()
         - output: pipelineArtifact
-          targetPath: .build/node-cpuprofile
-          artifactName: $(ARTIFACT_PREFIX)node-cpuprofile-$(VSCODE_ARCH)
-          displayName: Publish Codesign cpu profile
-          sbomEnabled: false
-          isProduction: false
-        - output: pipelineArtifact
           targetPath: $(SYSTEM_SETUP_PATH)
           artifactName: $(ARTIFACT_PREFIX)vscode_client_win32_$(VSCODE_ARCH)_setup
           displayName: Publish system setup

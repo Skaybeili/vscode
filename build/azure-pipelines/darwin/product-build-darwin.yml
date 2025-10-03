@@ -56,20 +56,20 @@ jobs:
           sbomPackageVersion: $(Build.SourceVersion)
         - output: pipelineArtifact
           targetPath: $(SERVER_PATH)
-          artifactName: $(ARTIFACT_PREFIX)vscode_server_darwin_$(VSCODE_ARCH)_archive-unsigned
+          artifactName: vscode_server_darwin_$(VSCODE_ARCH)_archive-unsigned
           displayName: Publish server archive
           sbomBuildDropPath: $(Agent.BuildDirectory)/vscode-server-darwin-$(VSCODE_ARCH)
           sbomPackageName: "VS Code macOS $(VSCODE_ARCH) Server"
           sbomPackageVersion: $(Build.SourceVersion)
-          condition: and(succeededOrFailed(), ne(variables['SERVER_PATH'], ''))
+          condition: ne(variables['SERVER_PATH'], '')
         - output: pipelineArtifact
           targetPath: $(WEB_PATH)
-          artifactName: $(ARTIFACT_PREFIX)vscode_web_darwin_$(VSCODE_ARCH)_archive-unsigned
+          artifactName: vscode_web_darwin_$(VSCODE_ARCH)_archive-unsigned
           displayName: Publish web server archive
           sbomBuildDropPath: $(Agent.BuildDirectory)/vscode-server-darwin-$(VSCODE_ARCH)-web
           sbomPackageName: "VS Code macOS $(VSCODE_ARCH) Web"
           sbomPackageVersion: $(Build.SourceVersion)
-          condition: and(succeededOrFailed(), ne(variables['WEB_PATH'], ''))
+          condition: ne(variables['WEB_PATH'], '')
     steps:
       - template: ./steps/product-build-darwin-compile.yml@self
         parameters:

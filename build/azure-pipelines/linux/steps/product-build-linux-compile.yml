@@ -369,7 +369,3 @@ steps:
     - script: npx deemon --attach node build/azure-pipelines/linux/codesign.js
       condition: succeededOrFailed()
       displayName: "✍️ Post-job: Codesign deb & rpm"
-
-    - script: echo "##vso[task.setvariable variable=ARTIFACT_PREFIX]attempt$(System.JobAttempt)_"
-      condition: and(succeededOrFailed(), notIn(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues'))
-      displayName: Generate artifact prefix

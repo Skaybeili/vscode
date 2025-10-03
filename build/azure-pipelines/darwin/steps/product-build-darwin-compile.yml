@@ -188,7 +188,7 @@ steps:
         mkdir -p $(dirname $ARCHIVE_PATH)
         (cd ../VSCode-darwin-$(VSCODE_ARCH) && zip -Xry $ARCHIVE_PATH *)
         echo "##vso[task.setvariable variable=CLIENT_PATH]$ARCHIVE_PATH"
-      condition: and(succeededOrFailed(), eq(variables['BUILT_CLIENT'], 'true'))
+      condition: eq(variables['BUILT_CLIENT'], 'true')
       displayName: Package client
 
     - pwsh: node build/azure-pipelines/common/checkForArtifact.js CLIENT_ARCHIVE_UPLOADED unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive
@@ -204,7 +204,7 @@ steps:
         artifactName: unsigned_vscode_client_darwin_$(VSCODE_ARCH)_archive
         displayName: Publish client archive (unsigned)
         sbomEnabled: false
-        condition: and(succeeded(), ne(variables['CLIENT_PATH'], ''), eq(variables['CLIENT_ARCHIVE_UPLOADED'], 'false'))
+        condition: and(ne(variables['CLIENT_PATH'], ''), eq(variables['CLIENT_ARCHIVE_UPLOADED'], 'false'))
 
     # Hardened entitlements should be set after publishing unsigned client artifacts
     # to ensure entitlement signing doesn't modify sha that would affect universal build.
@@ -230,7 +230,7 @@ steps:
         mkdir -p $(dirname $ARCHIVE_PATH)
         (cd ../VSCode-darwin-$(VSCODE_ARCH) && zip -Xry $ARCHIVE_PATH *)
         echo "##vso[task.setvariable variable=CLIENT_PATH]$ARCHIVE_PATH"
-      condition: and(succeededOrFailed(), eq(variables['BUILT_CLIENT'], 'true'))
+      condition: eq(variables['BUILT_CLIENT'], 'true')
       displayName: Re-package client after entitlement
 
     - task: UseDotNet@2
@@ -290,7 +290,3 @@ steps:
     - script: mv $(Pipeline.Workspace)/vscode_client_darwin_$(VSCODE_ARCH)_archive/VSCode-darwin-x64.zip $(Pipeline.Workspace)/vscode_client_darwin_$(VSCODE_ARCH)_archive/VSCode-darwin.zip
       displayName: Rename x64 build to its legacy name
       condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'))
-
-    - script: echo "##vso[task.setvariable variable=ARTIFACT_PREFIX]attempt$(System.JobAttempt)_"
-      condition: and(succeededOrFailed(), notIn(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues'))
-      displayName: Generate artifact prefix

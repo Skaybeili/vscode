@@ -18,36 +18,36 @@ jobs:
           # keep legacy name
           - output: pipelineArtifact
             targetPath: $(SERVER_PATH)
-            artifactName: $(ARTIFACT_PREFIX)vscode_server_linux_alpine_archive-unsigned
+            artifactName: vscode_server_linux_alpine_archive-unsigned
             displayName: Publish x64 server archive
             sbomEnabled: false
             isProduction: false
-            condition: and(succeededOrFailed(), ne(variables['SERVER_PATH'], ''))
+            condition: ne(variables['SERVER_PATH'], '')
           # keep legacy name
           - output: pipelineArtifact
             targetPath: $(WEB_PATH)
-            artifactName: $(ARTIFACT_PREFIX)vscode_web_linux_alpine_archive-unsigned
+            artifactName: vscode_web_linux_alpine_archive-unsigned
             displayName: Publish x64 web server archive
             sbomEnabled: false
             isProduction: false
-            condition: and(succeededOrFailed(), ne(variables['WEB_PATH'], ''))
+            condition: ne(variables['WEB_PATH'], '')
         - ${{ if ne(parameters.VSCODE_ARCH, 'x64') }}:
           - output: pipelineArtifact
             targetPath: $(SERVER_PATH)
-            artifactName: $(ARTIFACT_PREFIX)vscode_server_alpine_$(VSCODE_ARCH)_archive-unsigned
+            artifactName: vscode_server_alpine_$(VSCODE_ARCH)_archive-unsigned
             displayName: Publish server archive
             sbomBuildDropPath: $(SERVER_DIR_PATH)
             sbomPackageName: "VS Code Alpine $(VSCODE_ARCH) Server"
             sbomPackageVersion: $(Build.SourceVersion)
-            condition: and(succeededOrFailed(), ne(variables['SERVER_PATH'], ''))
+            condition: ne(variables['SERVER_PATH'], '')
           - output: pipelineArtifact
             targetPath: $(WEB_PATH)
-            artifactName: $(ARTIFACT_PREFIX)vscode_web_alpine_$(VSCODE_ARCH)_archive-unsigned
+            artifactName: vscode_web_alpine_$(VSCODE_ARCH)_archive-unsigned
             displayName: Publish web server archive
             sbomBuildDropPath: $(WEB_DIR_PATH)
             sbomPackageName: "VS Code Alpine $(VSCODE_ARCH) Web"
             sbomPackageVersion: $(Build.SourceVersion)
-            condition: and(succeededOrFailed(), ne(variables['WEB_PATH'], ''))
+            condition: ne(variables['WEB_PATH'], '')
     steps:
       - template: ../common/checkout.yml@self
 
@@ -203,7 +203,3 @@ jobs:
         env:
           GITHUB_TOKEN: "$(github-distro-mixin-password)"
         displayName: Build server (web)
-
-      - script: echo "##vso[task.setvariable variable=ARTIFACT_PREFIX]attempt$(System.JobAttempt)_"
-        condition: and(succeededOrFailed(), notIn(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues'))
-        displayName: Generate artifact prefix
